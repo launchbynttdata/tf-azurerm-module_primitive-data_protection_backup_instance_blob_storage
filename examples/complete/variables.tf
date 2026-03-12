@@ -74,8 +74,3 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
-variable "storage_account_suffix" {
-  type        = string
-  default     = ""
-  description = "Optional suffix appended to storage account name to ensure global uniqueness (CI). Lowercase alphanumeric only."
-}

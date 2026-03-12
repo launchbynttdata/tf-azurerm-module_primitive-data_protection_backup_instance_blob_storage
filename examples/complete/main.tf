@@ -24,11 +24,14 @@ module "resource_names" {
   maximum_length          = each.value.max_length
   logical_product_family  = var.logical_product_family
   logical_product_service = var.logical_product_service
+
 }
 
+resource "random_uuid" "ra_reader" {}
+resource "random_uuid" "ra_sa_backup" {}
+resource "random_uuid" "ra_blob_data" {}
 locals {
-  sa_base = substr(replace(module.resource_names["storage_account"].standard, "-", ""), 0, 24 - length(var.storage_account_suffix))
-  sa_name = "${local.sa_base}${var.storage_account_suffix}"
+  sa_name = module.resource_names["storage_account"].minimal_random_suffix_without_any_separators
 }
 module "resource_group" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/resource_group/azurerm"
@@ -43,7 +46,7 @@ module "backup_storage_reader" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
   version = "~> 1.0"
 
-  name                 = uuid()
+  name                 = random_uuid.ra_reader.result
   scope                = module.storage_account.id
   role_definition_name = "Reader"
   principal_id         = module.backup_vault.identity[0].principal_id
@@ -58,7 +61,7 @@ module "vault_storage_backup_contributor" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
   version = "~> 1.0"
 
-  name                 = uuid()
+  name                 = random_uuid.ra_sa_backup.result
   scope                = module.storage_account.id
   role_definition_name = "Storage Account Backup Contributor"
   principal_id         = module.backup_vault.identity[0].principal_id
@@ -74,7 +77,7 @@ module "vault_blob_contributor" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
   version = "~> 1.0"
 
-  name                 = uuid()
+  name                 = random_uuid.ra_blob_data.result
   scope                = module.storage_account.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.backup_vault.identity[0].principal_id
