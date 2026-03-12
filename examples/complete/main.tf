@@ -26,6 +26,10 @@ module "resource_names" {
   logical_product_service = var.logical_product_service
 }
 
+locals {
+  sa_base = substr(replace(module.resource_names["storage_account"].standard, "-", ""), 0, 24 - length(var.storage_account_suffix))
+  sa_name = "${local.sa_base}${var.storage_account_suffix}"
+}
 module "resource_group" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/resource_group/azurerm"
   version = "~> 1.0"
@@ -55,7 +59,7 @@ module "vault_storage_backup_contributor" {
   version = "~> 1.0"
 
   name                 = uuid()
-  scope                = "${module.storage_account.id}/blobServices/default/containers/${module.storage_container.name}"
+  scope                = module.storage_account.id
   role_definition_name = "Storage Account Backup Contributor"
   principal_id         = module.backup_vault.identity[0].principal_id
   principal_type       = "ServicePrincipal"
@@ -71,7 +75,7 @@ module "vault_blob_contributor" {
   version = "~> 1.0"
 
   name                 = uuid()
-  scope                = "${module.storage_account.id}/blobServices/default/containers/${module.storage_container.name}"
+  scope                = module.storage_account.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = module.backup_vault.identity[0].principal_id
   principal_type       = "ServicePrincipal"
@@ -86,13 +90,9 @@ module "storage_account" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
   version = "~> 1.0"
 
-  storage_account_name = substr(
-    replace(module.resource_names["storage_account"].standard, "-", ""),
-    0,
-    24
-  )
-  resource_group_name = module.resource_group.name
-  location            = var.location
+  storage_account_name = local.sa_name
+  resource_group_name  = module.resource_group.name
+  location             = var.location
   depends_on = [
     module.resource_group
   ]
@@ -109,12 +109,8 @@ module "storage_container" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_container/azurerm"
   version = "~> 1.0"
 
-  name = "backupcontainer"
-  storage_account_name = substr(
-    replace(module.resource_names["storage_account"].standard, "-", ""),
-    0,
-    24
-  )
+  name                 = "backupcontainer"
+  storage_account_name = local.sa_name
 
   container_access_type = "private"
 

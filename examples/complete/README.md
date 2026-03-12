@@ -48,6 +48,7 @@
 | <a name="input_logical_product_family"></a> [logical\_product\_family](#input\_logical\_product\_family) | n/a | `string` | n/a | yes |
 | <a name="input_logical_product_service"></a> [logical\_product\_service](#input\_logical\_product\_service) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
+| <a name="input_storage_account_suffix"></a> [storage\_account\_suffix](#input\_storage\_account\_suffix) | Optional suffix appended to storage account name to ensure global uniqueness (CI). Lowercase alphanumeric only. | `string` | `""` | no |
 
 ## Outputs
 
