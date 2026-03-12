@@ -7,10 +7,13 @@
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.5 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.117 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.9 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_time"></a> [time](#provider\_time) | 0.13.1 |
 
 ## Modules
 
@@ -18,14 +21,20 @@ No providers.
 |------|--------|---------|
 | <a name="module_resource_names"></a> [resource\_names](#module\_resource\_names) | terraform.registry.launch.nttdata.com/module_library/resource_name/launch | ~> 2.0 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform.registry.launch.nttdata.com/module_primitive/resource_group/azurerm | ~> 1.0 |
+| <a name="module_backup_storage_reader"></a> [backup\_storage\_reader](#module\_backup\_storage\_reader) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
+| <a name="module_vault_storage_backup_contributor"></a> [vault\_storage\_backup\_contributor](#module\_vault\_storage\_backup\_contributor) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
+| <a name="module_vault_blob_contributor"></a> [vault\_blob\_contributor](#module\_vault\_blob\_contributor) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
 | <a name="module_storage_account"></a> [storage\_account](#module\_storage\_account) | terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm | ~> 1.0 |
+| <a name="module_storage_container"></a> [storage\_container](#module\_storage\_container) | terraform.registry.launch.nttdata.com/module_primitive/storage_container/azurerm | ~> 1.0 |
 | <a name="module_backup_vault"></a> [backup\_vault](#module\_backup\_vault) | terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_vault/azurerm | ~> 0.1.1 |
 | <a name="module_backup_policy_blob_storage"></a> [backup\_policy\_blob\_storage](#module\_backup\_policy\_blob\_storage) | terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_policy_blob_storage/azurerm | ~> 1.0 |
 | <a name="module_backup_instance_blob_storage"></a> [backup\_instance\_blob\_storage](#module\_backup\_instance\_blob\_storage) | ../../ | n/a |
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [time_sleep.wait_for_rbac](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 
 ## Inputs
 
@@ -48,4 +57,5 @@ No resources.
 | <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id) | n/a |
 | <a name="output_backup_vault_id"></a> [backup\_vault\_id](#output\_backup\_vault\_id) | n/a |
 | <a name="output_backup_policy_blob_storage_id"></a> [backup\_policy\_blob\_storage\_id](#output\_backup\_policy\_blob\_storage\_id) | n/a |
+| <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name) | n/a |
 <!-- END_TF_DOCS -->

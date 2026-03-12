@@ -13,3 +13,7 @@ output "backup_vault_id" {
 output "backup_policy_blob_storage_id" {
   value = module.backup_policy_blob_storage.id
 }
+
+output "resource_group_name" {
+  value = module.resource_group.name
+}

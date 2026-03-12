@@ -35,15 +35,67 @@ module "resource_group" {
 
   tags = merge(var.tags, { resource_name = module.resource_names["resource_group"].standard })
 }
+module "backup_storage_reader" {
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
+  version = "~> 1.0"
 
+  name                 = uuid()
+  scope                = module.storage_account.id
+  role_definition_name = "Reader"
+  principal_id         = module.backup_vault.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
+
+  depends_on = [
+    module.storage_account,
+    module.backup_vault
+  ]
+}
+module "vault_storage_backup_contributor" {
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
+  version = "~> 1.0"
+
+  name                 = uuid()
+  scope                = "${module.storage_account.id}/blobServices/default/containers/${module.storage_container.name}"
+  role_definition_name = "Storage Account Backup Contributor"
+  principal_id         = module.backup_vault.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
+
+  depends_on = [
+    module.storage_account,
+    module.storage_container,
+    module.backup_vault
+  ]
+}
+module "vault_blob_contributor" {
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
+  version = "~> 1.0"
+
+  name                 = uuid()
+  scope                = "${module.storage_account.id}/blobServices/default/containers/${module.storage_container.name}"
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = module.backup_vault.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
+
+  depends_on = [
+    module.storage_account,
+    module.storage_container,
+    module.backup_vault
+  ]
+}
 module "storage_account" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
   version = "~> 1.0"
 
-  storage_account_name = substr(replace(module.resource_names["storage_account"].standard, "-", ""), 0, 24)
-  resource_group_name  = module.resource_group.name
-  location             = var.location
-
+  storage_account_name = substr(
+    replace(module.resource_names["storage_account"].standard, "-", ""),
+    0,
+    24
+  )
+  resource_group_name = module.resource_group.name
+  location            = var.location
+  depends_on = [
+    module.resource_group
+  ]
   account_tier             = "Standard"
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
@@ -53,7 +105,23 @@ module "storage_account" {
 
   tags = merge(var.tags, { resource_name = module.resource_names["storage_account"].standard })
 }
+module "storage_container" {
+  source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_container/azurerm"
+  version = "~> 1.0"
 
+  name = "backupcontainer"
+  storage_account_name = substr(
+    replace(module.resource_names["storage_account"].standard, "-", ""),
+    0,
+    24
+  )
+
+  container_access_type = "private"
+
+  depends_on = [
+    module.storage_account
+  ]
+}
 module "backup_vault" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_vault/azurerm"
   version = "~> 0.1.1"
@@ -64,10 +132,13 @@ module "backup_vault" {
 
   datastore_type = "VaultStore"
   redundancy     = "LocallyRedundant"
-
+  soft_delete    = "Off"
   identity = {
     type = "SystemAssigned"
   }
+  depends_on = [
+    module.resource_group
+  ]
 
   tags = {
     resource_name = module.resource_names["backup_vault"].standard
@@ -87,16 +158,34 @@ module "backup_policy_blob_storage" {
   time_zone                              = "UTC"
 
   retention_rules = []
+  depends_on = [
+    module.backup_vault
+  ]
 }
+resource "time_sleep" "wait_for_rbac" {
+  depends_on = [
+    module.backup_storage_reader,
+    module.vault_blob_contributor,
+    module.vault_storage_backup_contributor
+  ]
 
+  create_duration = "300s"
+}
 module "backup_instance_blob_storage" {
   source = "../../"
 
-  name = module.resource_names["backup_instance_blob_storage"].standard
+  storage_account_container_names = [module.storage_container.name]
 
+  name     = module.resource_names["backup_instance_blob_storage"].standard
   location = module.storage_account.primary_location
 
   storage_account_id = module.storage_account.id
   vault_id           = module.backup_vault.vault_id
   backup_policy_id   = module.backup_policy_blob_storage.id
+
+  depends_on = [
+    module.backup_policy_blob_storage,
+    module.storage_container,
+    time_sleep.wait_for_rbac
+  ]
 }

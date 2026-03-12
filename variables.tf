@@ -22,3 +22,7 @@ variable "backup_policy_id" {
   type        = string
   description = "Backup policy ID"
 }
+variable "storage_account_container_names" {
+  description = "List of blob containers to protect"
+  type        = list(string)
+}
