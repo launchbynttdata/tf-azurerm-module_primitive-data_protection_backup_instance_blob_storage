@@ -44,7 +44,7 @@ module "resource_group" {
 }
 module "backup_storage_reader" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm"
-  version = "~> 1.0"
+  version = "~> 1.2.1"
 
   name                 = random_uuid.ra_reader.result
   scope                = module.storage_account.id
