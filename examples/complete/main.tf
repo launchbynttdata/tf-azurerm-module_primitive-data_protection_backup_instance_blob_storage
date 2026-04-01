@@ -148,13 +148,11 @@ module "backup_policy_blob_storage" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_policy_blob_storage/azurerm"
   version = "~> 1.0"
 
-  policy_name = module.resource_names["backup_policy_blob_storage"].standard
-  vault_id    = module.backup_vault.vault_id
-
-  backup_repeating_time_intervals        = ["R/2024-01-01T02:00:00+00:00/P1D"]
-  operational_default_retention_duration = "P7D"
-  vault_default_retention_duration       = "P30D"
-  time_zone                              = "UTC"
+  policy_name                      = module.resource_names["backup_policy_blob_storage"].standard
+  vault_id                         = module.backup_vault.vault_id
+  backup_repeating_time_intervals  = ["R/2024-01-01T02:00:00+00:00/P1D"]
+  vault_default_retention_duration = "P30D"
+  time_zone                        = "UTC"
 
   retention_rules = []
   depends_on = [
@@ -173,10 +171,9 @@ resource "time_sleep" "wait_for_rbac" {
 module "backup_instance_blob_storage" {
   source = "../../"
 
+  name                            = module.resource_names["backup_instance_blob_storage"].standard
+  location                        = var.location
   storage_account_container_names = [module.storage_container.name]
-
-  name     = module.resource_names["backup_instance_blob_storage"].standard
-  location = module.storage_account.primary_location
 
   storage_account_id = module.storage_account.id
   vault_id           = module.backup_vault.vault_id

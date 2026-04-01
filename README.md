@@ -32,12 +32,12 @@ No modules.
 | <a name="input_vault_id"></a> [vault\_id](#input\_vault\_id) | Backup vault ID | `string` | n/a | yes |
 | <a name="input_storage_account_id"></a> [storage\_account\_id](#input\_storage\_account\_id) | Storage account ID | `string` | n/a | yes |
 | <a name="input_backup_policy_id"></a> [backup\_policy\_id](#input\_backup\_policy\_id) | Backup policy ID | `string` | n/a | yes |
-| <a name="input_storage_account_container_names"></a> [storage\_account\_container\_names](#input\_storage\_account\_container\_names) | List of blob containers to protect | `list(string)` | n/a | yes |
+| <a name="input_storage_account_container_names"></a> [storage\_account\_container\_names](#input\_storage\_account\_container\_names) | List of blob containers to protect | `list(string)` | `null` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_backup_instance_id"></a> [backup\_instance\_id](#output\_backup\_instance\_id) | n/a |
-| <a name="output_backup_instance_name"></a> [backup\_instance\_name](#output\_backup\_instance\_name) | n/a |
+| <a name="output_backup_instance_id"></a> [backup\_instance\_id](#output\_backup\_instance\_id) | The ID of the created Data Protection Backup Instance |
+| <a name="output_backup_instance_name"></a> [backup\_instance\_name](#output\_backup\_instance\_name) | The name of the created Data Protection Backup Instance |
 <!-- END_TF_DOCS -->

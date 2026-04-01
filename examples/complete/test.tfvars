@@ -1,4 +1,4 @@
-location = "eastus"
+location = "northeurope"
 
 class_env               = "dev"
 instance_env            = "001"
