@@ -89,9 +89,10 @@ module "vault_blob_contributor" {
     module.backup_vault
   ]
 }
+
 module "storage_account" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm"
-  version = "~> 1.0"
+  version = "~> 1.3.2"
 
   storage_account_name = local.sa_name
   resource_group_name  = module.resource_group.name
@@ -106,8 +107,14 @@ module "storage_account" {
   enable_https_traffic_only     = true
   public_network_access_enabled = true
 
+  # Azure Backup enables these on protected storage accounts; pinning retention avoids second-apply drift.
+  blob_versioning_enabled            = true
+  blob_change_feed_enabled           = true
+  blob_change_feed_retention_in_days = 7
+
   tags = merge(var.tags, { resource_name = module.resource_names["storage_account"].standard })
 }
+
 module "storage_container" {
   source  = "terraform.registry.launch.nttdata.com/module_primitive/storage_container/azurerm"
   version = "~> 1.0"
@@ -174,6 +181,7 @@ module "backup_instance_blob_storage" {
   name                            = module.resource_names["backup_instance_blob_storage"].standard
   location                        = var.location
   storage_account_container_names = [module.storage_container.name]
+  timeouts                        = var.timeouts
 
   storage_account_id = module.storage_account.id
   vault_id           = module.backup_vault.vault_id

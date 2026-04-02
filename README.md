@@ -33,6 +33,7 @@ No modules.
 | <a name="input_storage_account_id"></a> [storage\_account\_id](#input\_storage\_account\_id) | Storage account ID | `string` | n/a | yes |
 | <a name="input_backup_policy_id"></a> [backup\_policy\_id](#input\_backup\_policy\_id) | Backup policy ID | `string` | n/a | yes |
 | <a name="input_storage_account_container_names"></a> [storage\_account\_container\_names](#input\_storage\_account\_container\_names) | List of blob containers to protect | `list(string)` | `null` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Configurable timeouts for backing up and restoring the Backup Instance | <pre>object({<br/>    create = optional(string, "30m")<br/>    read   = optional(string, "5m")<br/>    update = optional(string, "30m")<br/>    delete = optional(string, "30m")<br/>  })</pre> | `{}` | no |
 
 ## Outputs
 

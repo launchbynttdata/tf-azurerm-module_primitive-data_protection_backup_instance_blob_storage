@@ -23,10 +23,10 @@
 |------|--------|---------|
 | <a name="module_resource_names"></a> [resource\_names](#module\_resource\_names) | terraform.registry.launch.nttdata.com/module_library/resource_name/launch | ~> 2.0 |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | terraform.registry.launch.nttdata.com/module_primitive/resource_group/azurerm | ~> 1.0 |
-| <a name="module_backup_storage_reader"></a> [backup\_storage\_reader](#module\_backup\_storage\_reader) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
+| <a name="module_backup_storage_reader"></a> [backup\_storage\_reader](#module\_backup\_storage\_reader) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.2.1 |
 | <a name="module_vault_storage_backup_contributor"></a> [vault\_storage\_backup\_contributor](#module\_vault\_storage\_backup\_contributor) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
 | <a name="module_vault_blob_contributor"></a> [vault\_blob\_contributor](#module\_vault\_blob\_contributor) | terraform.registry.launch.nttdata.com/module_primitive/role_assignment/azurerm | ~> 1.0 |
-| <a name="module_storage_account"></a> [storage\_account](#module\_storage\_account) | terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm | ~> 1.0 |
+| <a name="module_storage_account"></a> [storage\_account](#module\_storage\_account) | terraform.registry.launch.nttdata.com/module_primitive/storage_account/azurerm | ~> 1.3.2 |
 | <a name="module_storage_container"></a> [storage\_container](#module\_storage\_container) | terraform.registry.launch.nttdata.com/module_primitive/storage_container/azurerm | ~> 1.0 |
 | <a name="module_backup_vault"></a> [backup\_vault](#module\_backup\_vault) | terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_vault/azurerm | ~> 0.1.1 |
 | <a name="module_backup_policy_blob_storage"></a> [backup\_policy\_blob\_storage](#module\_backup\_policy\_blob\_storage) | terraform.registry.launch.nttdata.com/module_primitive/data_protection_backup_policy_blob_storage/azurerm | ~> 1.0 |
@@ -53,6 +53,7 @@
 | <a name="input_logical_product_family"></a> [logical\_product\_family](#input\_logical\_product\_family) | n/a | `string` | n/a | yes |
 | <a name="input_logical_product_service"></a> [logical\_product\_service](#input\_logical\_product\_service) | n/a | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Configurable timeouts for backing up and restoring the Backup Instance | <pre>object({<br/>    create = optional(string, "30m")<br/>    read   = optional(string, "5m")<br/>    update = optional(string, "30m")<br/>    delete = optional(string, "30m")<br/>  })</pre> | `{}` | no |
 
 ## Outputs
 

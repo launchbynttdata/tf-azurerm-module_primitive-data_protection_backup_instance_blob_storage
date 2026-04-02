@@ -74,3 +74,14 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "timeouts" {
+  description = "Configurable timeouts for backing up and restoring the Backup Instance"
+  type = object({
+    create = optional(string, "30m")
+    read   = optional(string, "5m")
+    update = optional(string, "30m")
+    delete = optional(string, "30m")
+  })
+  default = {}
+}

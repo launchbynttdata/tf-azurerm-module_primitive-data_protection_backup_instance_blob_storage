@@ -28,3 +28,14 @@ variable "storage_account_container_names" {
   type        = list(string)
   default     = null
 }
+
+variable "timeouts" {
+  description = "Configurable timeouts for backing up and restoring the Backup Instance"
+  type = object({
+    create = optional(string, "30m")
+    read   = optional(string, "5m")
+    update = optional(string, "30m")
+    delete = optional(string, "30m")
+  })
+  default = {}
+}

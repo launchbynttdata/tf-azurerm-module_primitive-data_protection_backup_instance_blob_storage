@@ -11,3 +11,10 @@ tags = {
   terraform   = "true"
   provisioner = "terraform"
 }
+
+timeouts = {
+  create = "30m"
+  read   = "5m"
+  update = "30m"
+  delete = "30m"
+}
