@@ -5,7 +5,7 @@ variable "name" {
 
 variable "location" {
   type        = string
-  description = "Location of the storage account"
+  description = "Location of the backup instance (must match backup vault location)"
 }
 
 variable "vault_id" {

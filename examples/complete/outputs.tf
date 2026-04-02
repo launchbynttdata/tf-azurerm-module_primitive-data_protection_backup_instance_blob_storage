@@ -1,14 +1,16 @@
 output "backup_instance_blob_storage_id" {
-  value = module.backup_instance_blob_storage.backup_instance_id
+  description = "ID of the Backup Instance (Blob Storage)"
+  value       = module.backup_instance_blob_storage.backup_instance_id
 }
 
 output "backup_instance_blob_storage_name" {
   description = "Name of the Backup Instance (Blob Storage)"
-  value       = module.resource_names["backup_instance_blob_storage"].standard
+  value       = module.backup_instance_blob_storage.backup_instance_name
 }
 
 output "storage_account_id" {
-  value = module.storage_account.id
+  description = "ID of the Storage Account"
+  value       = module.storage_account.id
 }
 
 output "storage_account_name" {
@@ -23,7 +25,8 @@ output "name" {
 }
 
 output "backup_vault_id" {
-  value = module.backup_vault.vault_id
+  description = "ID of the Backup Vault"
+  value       = module.backup_vault.vault_id
 }
 
 output "backup_vault_name" {
@@ -32,9 +35,11 @@ output "backup_vault_name" {
 }
 
 output "backup_policy_blob_storage_id" {
-  value = module.backup_policy_blob_storage.id
+  description = "ID of the Backup Policy (Blob Storage)"
+  value       = module.backup_policy_blob_storage.id
 }
 
 output "resource_group_name" {
-  value = module.resource_group.name
+  description = "Name of the Resource Group"
+  value       = module.resource_group.name
 }

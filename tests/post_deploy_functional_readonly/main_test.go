@@ -26,7 +26,7 @@ const (
 	infraTFVarFileNameDefault        = "test.tfvars"
 )
 
-func TestBackupInstanceBlobStorageModule(t *testing.T) {
+func TestReadonlyBackupInstanceBlobStorageModule(t *testing.T) {
 
 	ctx := types.CreateTestContextBuilder().
 		SetTestConfig(&testimpl.ThisTFModuleConfig{}).
@@ -34,5 +34,5 @@ func TestBackupInstanceBlobStorageModule(t *testing.T) {
 		SetTestConfigFileName(infraTFVarFileNameDefault).
 		Build()
 
-	lib.RunSetupTestTeardown(t, *ctx, testimpl.TestComposableBackupInstanceBlobStorage)
+	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestReadonlyBackupInstanceBlobStorage)
 }

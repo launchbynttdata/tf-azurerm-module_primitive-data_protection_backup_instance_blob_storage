@@ -28,7 +28,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_name"></a> [name](#input\_name) | Name of the Backup Instance | `string` | n/a | yes |
-| <a name="input_location"></a> [location](#input\_location) | Location of the storage account | `string` | n/a | yes |
+| <a name="input_location"></a> [location](#input\_location) | Location of the backup instance (must match backup vault location) | `string` | n/a | yes |
 | <a name="input_vault_id"></a> [vault\_id](#input\_vault\_id) | Backup vault ID | `string` | n/a | yes |
 | <a name="input_storage_account_id"></a> [storage\_account\_id](#input\_storage\_account\_id) | Storage account ID | `string` | n/a | yes |
 | <a name="input_backup_policy_id"></a> [backup\_policy\_id](#input\_backup\_policy\_id) | Backup policy ID | `string` | n/a | yes |

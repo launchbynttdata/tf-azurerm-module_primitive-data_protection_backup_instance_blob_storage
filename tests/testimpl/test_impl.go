@@ -14,6 +14,14 @@ import (
 )
 
 func TestComposableBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
+	validateBackupInstanceBlobStorage(t, ctx)
+}
+
+func TestReadonlyBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
+	validateBackupInstanceBlobStorage(t, ctx)
+}
+
+func validateBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
 
 	subscriptionId := os.Getenv("ARM_SUBSCRIPTION_ID")
 	if subscriptionId == "" {

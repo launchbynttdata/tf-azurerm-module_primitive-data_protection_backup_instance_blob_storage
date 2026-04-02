@@ -47,32 +47,39 @@ variable "resource_names_map" {
 }
 
 variable "location" {
-  type = string
+  description = "Azure region used for all example resources"
+  type        = string
 }
 
 variable "class_env" {
-  type = string
+  description = "Class environment segment for generated resource names"
+  type        = string
 }
 
 variable "instance_env" {
-  type = string
+  description = "Instance environment segment for generated resource names"
+  type        = string
 }
 
 variable "instance_resource" {
-  type = string
+  description = "Instance resource segment for generated resource names"
+  type        = string
 }
 
 variable "logical_product_family" {
-  type = string
+  description = "Logical product family segment for generated resource names"
+  type        = string
 }
 
 variable "logical_product_service" {
-  type = string
+  description = "Logical product service segment for generated resource names"
+  type        = string
 }
 
 variable "tags" {
-  type    = map(string)
-  default = {}
+  description = "Tags applied to all example resources"
+  type        = map(string)
+  default     = {}
 }
 
 variable "timeouts" {
