@@ -25,4 +25,9 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "backup_instance
     update = var.timeouts.update
     delete = var.timeouts.delete
   }
+
+  lifecycle {
+    # Azure API may normalize the container list order on read, causing false drift.
+    ignore_changes = [storage_account_container_names]
+  }
 }
