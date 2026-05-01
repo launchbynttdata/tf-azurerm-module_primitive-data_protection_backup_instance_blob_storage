@@ -10,6 +10,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+locals {
+  storage_account_container_names = (
+    var.storage_account_container_names == null
+    ? null
+    : sort(var.storage_account_container_names)
+  )
+}
+
 resource "azurerm_data_protection_backup_instance_blob_storage" "backup_instance_blob_storage" {
 
   name                            = var.name
@@ -17,7 +25,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "backup_instance
   vault_id                        = var.vault_id
   storage_account_id              = var.storage_account_id
   backup_policy_id                = var.backup_policy_id
-  storage_account_container_names = var.storage_account_container_names
+  storage_account_container_names = local.storage_account_container_names
 
   timeouts {
     create = var.timeouts.create
@@ -25,4 +33,5 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "backup_instance
     update = var.timeouts.update
     delete = var.timeouts.delete
   }
+
 }
