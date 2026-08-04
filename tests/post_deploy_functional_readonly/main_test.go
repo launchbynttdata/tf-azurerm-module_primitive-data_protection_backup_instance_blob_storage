@@ -34,5 +34,5 @@ func TestReadonlyBackupInstanceBlobStorageModule(t *testing.T) {
 		SetTestConfigFileName(infraTFVarFileNameDefault).
 		Build()
 
-	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestComposableReadonlyReadonlyBackupInstanceBlobStorage)
+	lib.RunNonDestructiveTest(t, *ctx, testimpl.TestComposableReadonlyBackupInstanceBlobStorage)
 }
