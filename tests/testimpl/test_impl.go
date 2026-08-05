@@ -76,3 +76,7 @@ func validateBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
 
 	})
 }
+
+func TestComposableReadonlyBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
+	TestReadonlyBackupInstanceBlobStorage(t, ctx)
+}
