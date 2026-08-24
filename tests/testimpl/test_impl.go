@@ -35,21 +35,15 @@ func validateBackupInstanceBlobStorage(t *testing.T, ctx types.TestContext) {
 
 	t.Run("validateBackupInstanceBlobStorageExists", func(t *testing.T) {
 
-		resourceGroupName := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		resourceGroupName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"resource_group_name",
 		)
 
-		vaultName := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		vaultName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"backup_vault_name",
 		)
 
-		instanceName := terraform.Output(
-			t,
-			ctx.TerratestTerraformOptions(),
+		instanceName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(),
 			"backup_instance_blob_storage_name",
 		)
 
